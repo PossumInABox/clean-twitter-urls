@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Clean Twitter Outbound URLs
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      2.1
 // @description  Userscript to remove t.co outbound tracking links from tweets
 // @author       PossumInABox
 // @grant        none
@@ -13,16 +13,34 @@
 
 (function() {
 
+
+    // detect theme
+    let linkColor = "white"
+    let hoverColor = "rgba(247, 249, 249, 0.1)"
+    if (document.body.style.backgroundColor === 'rgb(255, 255, 255)') {
+        linkColor = "black"
+        hoverColor = "rgba(15, 20, 25, 0.1)"
+    }
+
 // add css
-    let styles = `<style>
+    const styles = `<style>
 #cleanLinks {
     font-family: TwitterChirp, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: white;
+    color: ${linkColor}!important;
     font-size: inherit;
+}
+
+#cleanLinks div {
+    color: ${linkColor}!important;
 }
 
 #cleanLinks:hover {
     cursor: pointer;
+}
+
+#cleanLinks>div:hover {
+    border-radius: 30px;
+    background-color: ${hoverColor};
 }
 
 #cleanLinks:active {
@@ -74,7 +92,7 @@
     }
 
     // html for button
-    let cleanButtonHTML = `<a id="cleanLinks" role="link">
+    const cleanButtonHTML = `<a id="cleanLinks" role="link">
 	<div class="css-1dbjc4n r-1awozwy r-sdzlij r-18u37iz r-1777fci r-dnmrzs r-xyw6el r-o7ynqc r-6416eg">
 		<div class="css-1dbjc4n linkIcon">
 			<span>&#8466;</span>
@@ -89,7 +107,7 @@
     setTimeout(() => {
         // make button to force run script
         let nav = document.querySelector('nav[role="navigation"]')
-        nav.innerHTML += cleanButtonHTML
+        nav.insertAdjacentHTML("beforeend", cleanButtonHTML)
         document.getElementById("cleanLinks").addEventListener('click', processURLs);
     }, 500)
 
