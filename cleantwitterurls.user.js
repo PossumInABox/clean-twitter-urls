@@ -53,14 +53,12 @@
     function replaceURL(a) {
         let actualURL = a.innerText.replace('…', '')
         a.setAttribute("href", actualURL)
-        console.log(`${actualURL}`)
     }
 
-    function setUrlHovers() {
+    function processURLs() {
         let links = document.querySelectorAll(`${tweetSelector} ${linkSelector}`)
-        console.log(links)
         links.forEach(a => {
-            window.replaceURL(a)
+            replaceURL(a)
         })
     }
 
@@ -80,16 +78,15 @@
     setTimeout(() => {
         // make button to force run script
         let nav = document.querySelector('nav[role="navigation"]')
-        //console.log(nav)
         nav.innerHTML += cleanButtonHTML
-        document.getElementById("cleanLinks").addEventListener('click', setUrlHovers);
+        document.getElementById("cleanLinks").addEventListener('click', processURLs);
     }, 500)
 
 
     // wait for api to load tweet data before running replace function
     // 2.5s appears to work, shorter times do not
     setTimeout(() => {
-        setUrlHovers()
+        processURLs()
     }, 2500)
 
     console.debug("Loaded module: Clean Twitter URLs by PossumInABox | See: https://github.com/PossumInABox/clean-twitter-urls")
