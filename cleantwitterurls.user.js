@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Clean Twitter Outbound URLs
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      2.0
 // @description  Userscript to remove t.co outbound tracking links from tweets
 // @author       PossumInABox
 // @grant        none
@@ -52,7 +52,13 @@
     // userscript
     // replace t.co outbound tracking links with real url
     const tweetSelector = '[data-testid="tweetText"]'
+    const bioSelector = 'div[data-testid="UserDescription"]'
+    const headerItemsSelector = 'div[data-testid="UserProfileHeader_Items"]'
     const linkSelector = 'a[target="_blank"][role="link"]'
+    const linkSelectorNoRole = 'a[target="_blank"][role="none"]'
+
+    const linkInTweet = `${tweetSelector} ${linkSelector}`
+    const linkInBio = `${bioSelector} ${linkSelector}, ${headerItemsSelector} ${linkSelectorNoRole}`
 
     function replaceURL(a) {
         let actualURL = a.innerText.replace('…', '')
@@ -61,7 +67,7 @@
     }
 
     function processURLs() {
-        let links = document.querySelectorAll(`${tweetSelector} ${linkSelector}`)
+        let links = document.querySelectorAll(`${linkInTweet}, ${linkInBio}`)
         links.forEach(a => {
             replaceURL(a)
         })
@@ -94,7 +100,7 @@
         processURLs()
     }, 2500)
 
-    console.debug("Loaded module: Clean Twitter URLs by PossumInABox | See: https://github.com/PossumInABox/clean-twitter-urls")
+    console.info("Loaded module: Clean Twitter URLs by PossumInABox | See: https://github.com/PossumInABox/clean-twitter-urls")
 
 
 })()
