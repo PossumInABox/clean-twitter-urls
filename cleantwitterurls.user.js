@@ -41,7 +41,7 @@
 }
 
 .cleaned {
-    color: #04db7d;
+    color: #04db7d!important;
 }
 </style>`
 
