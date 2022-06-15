@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Clean Twitter Outbound URLs
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Userscript to remove t.co outbound tracking links from tweets
 // @author       PossumInABox
 // @grant        none
@@ -39,6 +39,10 @@
     width: 1.75rem;
     font-size: x-large;
 }
+
+.cleaned {
+    color: #04db7d;
+}
 </style>`
 
     document.head.insertAdjacentHTML("beforeend", styles)
@@ -53,6 +57,7 @@
     function replaceURL(a) {
         let actualURL = a.innerText.replace('…', '')
         a.setAttribute("href", actualURL)
+        a.classList.add("cleaned")
     }
 
     function processURLs() {
