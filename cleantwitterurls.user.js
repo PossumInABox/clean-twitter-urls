@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Clean Twitter Outbound URLs
-// @namespace    http://tampermonkey.net/
-// @version      2.2
+// @namespace    https://github.com/PossumInABox/clean-twitter-urls
+// @homepage	 https://github.com/PossumInABox/clean-twitter-urls
+// @version      2.3
 // @description  Userscript to remove t.co outbound tracking links from tweets
 // @author       PossumInABox
 // @grant        none
-// @include		 https://twitter.com*
+// @include	 https://twitter.com*
 // @downloadURL  https://possuminabox.github.io/clean-twitter-urls/cleantwitterurls.user.js
 // @updateURL    https://possuminabox.github.io/clean-twitter-urls/cleantwitterurls.user.js
 // ==/UserScript==
